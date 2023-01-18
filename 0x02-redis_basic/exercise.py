@@ -7,7 +7,7 @@ from uuid import uuid4
 import redis
 
 
-def count_calls(method: Callable):
+def count_calls(method: Callable) -> Callable:
     """Counts how many times a function has been called."""
     @functools.wraps(method)
     def increment(self, *args, **kwargs):
@@ -18,7 +18,7 @@ def count_calls(method: Callable):
     return increment
 
 
-def call_history(method: Callable):
+def call_history(method: Callable) -> Callable:
     """Stores the history of inputs and outputs for a particular function"""
     @functools.wraps(method)
     def store_history(self, *args, **kwargs):
@@ -41,7 +41,7 @@ class Cache:
 
     @call_history
     @count_calls
-    def store(self, data: Union[str, bytes, int, float]):
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         generate a random key, store the input data in Redis using the
         random key and return the key.
